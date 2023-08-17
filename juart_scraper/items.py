@@ -17,3 +17,4 @@ class ProductItem(scrapy.Item):
     id = scrapy.Field()
     price = scrapy.Field()
     description = scrapy.Field()
+    tags = scrapy.Field()

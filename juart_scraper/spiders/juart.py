@@ -27,6 +27,7 @@ class JuartSpider(scrapy.Spider):
         item["title"] = response.css("h2.product_title::text").get()
         item["id"] = response.css("span.sku::text").get()
         item["price"] = response.css(".summary bdi::text").get()
-        item["description"] = response.css(".woocommerce-tabs > .resp-tabs-container > .tab-content > p::text").getall()
+        item["description"] = response.css("#tab-description")
+        item["tags"] = response.css(".summary span.tagged_as a::text").getall()
         yield item
 
