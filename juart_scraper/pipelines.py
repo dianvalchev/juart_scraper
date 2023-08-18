@@ -12,17 +12,8 @@ from itemadapter import ItemAdapter
 
 class ConcatenateDescriptionPipeline(object):
     def process_item(self, item, spider):
-        old_paragraph = item["description"].css("p, li::text").extract()
-
-        combined_text = "\n".join(
-            [
-                x.replace("<p>", "")
-                .replace("</p>", "")
-                .replace("<strong>", "[B]")  # replace <strong> with [B] for bold text reference. Can be skipped
-                .replace("</strong>", "[/B]")  # replace </strong> with[/B] for bold text reference. Can be skipped
-                for x in old_paragraph if x]
-        )
-
+        # using xpath to select every text content of the <p> and <li> elements in the description
+        combined_text = "\n".join(x.xpath("string()").get().strip() for x in item["description"])
         item["description"] = combined_text
         return item
 

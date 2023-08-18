@@ -27,7 +27,7 @@ class JuartSpider(scrapy.Spider):
         item["title"] = response.css("h2.product_title::text").get()
         item["id"] = response.css("span.sku::text").get()
         item["price"] = response.css(".summary bdi::text").get()
-        item["description"] = response.css("#tab-description")
+        item["description"] = response.xpath("//div[@id='tab-description']//p | //div[@id='tab-description']//li")
         item["tags"] = response.css(".summary span.tagged_as a::text").getall()
         yield item
 
