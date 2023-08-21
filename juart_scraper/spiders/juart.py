@@ -24,10 +24,9 @@ class JuartSpider(scrapy.Spider):
     def parse_product(self, response):
         # Extract required data from each product
         item = ProductItem()
-        item["title"] = response.css("h2.product_title::text").get()
-        item["id"] = response.css("span.sku::text").get()
-        item["price"] = response.css(".summary bdi::text").get()
-        item["description"] = response.xpath("//div[@id='tab-description']//p | //div[@id='tab-description']//li")
+        item["title"] = response.css("h2.product_title::text").get().strip()
+        item["id"] = response.css("span.sku::text").get().strip()
+        item["price"] = response.css(".summary bdi::text").get().strip()
+        item["description"] = response.xpath("//div[@id='tab-description']//p")
         item["tags"] = response.css(".summary span.tagged_as a::text").getall()
         yield item
-

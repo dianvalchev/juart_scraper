@@ -13,8 +13,17 @@ from itemadapter import ItemAdapter
 class ConcatenateDescriptionPipeline(object):
     def process_item(self, item, spider):
         # using xpath to select every text content of the <p> and <li> elements in the description
-        combined_text = "\n".join(x.xpath("string()").get().strip() for x in item["description"])
-        item["description"] = combined_text
+        combined_text = "\n".join(x for x in item["description"].css("p").getall() if x != " " and x != "")
+        final_text = combined_text.replace("<p>", "") \
+            .replace("</p>", "") \
+            .replace("\xa0", "") \
+            .replace("<strong>", "") \
+            .replace("</strong>", "") \
+            .replace("<b>", "") \
+            .replace("</b>", "") \
+            .replace("<br>", "\n") \
+            .replace("</br>", "")
+        item["description"] = final_text
         return item
 
 
