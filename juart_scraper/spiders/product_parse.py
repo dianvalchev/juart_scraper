@@ -2,10 +2,16 @@ import scrapy
 from juart_scraper.items import ProductItem
 
 
-class JuartSpider(scrapy.Spider):
-    name = "juart"
+class ProductParseSpider(scrapy.Spider):
+    name = "product_parse"
     allowed_domains = ["juart.bg"]
     start_urls = ["https://juart.bg"]
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            "juart_scraper.pipelines.ConcatenateDescriptionPipeline": 100,
+            "juart_scraper.pipelines.JsonWithEncodingPipeline": 300,
+        }
+    }
 
     def parse(self, response):
         # Get all the categories' urls and put them in a variable.

@@ -62,9 +62,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "juart_scraper.pipelines.ConcatenateDescriptionPipeline": 100,
-    "juart_scraper.pipelines.JsonWithEncodingPipeline": 300,
-    # "scrapy.exporters.JsonItemExporter": 1,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
